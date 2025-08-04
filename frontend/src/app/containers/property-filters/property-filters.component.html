@@ -1,0 +1,73 @@
+<div class="bg-white rounded-lg shadow p-6 space-y-4">
+    <!-- Cabeçalho -->
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="text-green-600 font-bold">🛠️</span>   <!-- Adicionar outroicone -->
+        <h3 class="font-semibold text-lg">Filtros</h3>
+      </div>
+      <button class="text-sm text-gray-600 hover:underline" (click)="clearFilters()">
+        Limpar
+      </button>
+    </div>
+  
+    <!-- Filtros principais -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.city">
+        <option value="">Cidade</option>
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+  
+      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.neighborhood">
+        <option value="">Bairro</option>
+        <option *ngFor="let n of neighborhoods" [value]="n">{{ n }}</option>
+      </select>
+  
+      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.type">
+        <option value="">Tipo</option>
+        <option value="apartment">Apartamento</option>
+        <option value="house">Casa</option>
+        <option value="commercial">Comercial</option>
+      </select>
+    </div>
+  
+    <!-- Faixa de Preço -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input class="w-full border rounded px-3 py-2" type="number" placeholder="Preço mínimo" [(ngModel)]="filters.minPrice" />
+      <input class="w-full border rounded px-3 py-2" type="number" placeholder="Preço máximo" [(ngModel)]="filters.maxPrice" />
+    </div>
+  
+    <!-- Avançado -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.bedrooms">
+        <option value="">Quartos</option>
+        <option value="1">1+ quarto</option>
+        <option value="2">2+ quartos</option>
+        <option value="3">3+ quartos</option>
+        <option value="4">4+ quartos</option>
+      </select>
+  
+      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.bathrooms">
+        <option value="">Banheiros</option>
+        <option value="1">1+ banheiro</option>
+        <option value="2">2+ banheiros</option>
+        <option value="3">3+ banheiros</option>
+      </select>
+  
+      <input class="w-full border rounded px-3 py-2" type="number" placeholder="Área mín. (m²)" [(ngModel)]="filters.minArea" />
+      <input class="w-full border rounded px-3 py-2" type="number" placeholder="Área máx. (m²)" [(ngModel)]="filters.maxArea" />
+    </div>
+  
+    <!-- Rodapé -->
+    <div class="flex items-center justify-between border-t pt-4">
+      <span class="text-sm text-gray-500">
+        {{ resultsCount }} {{ resultsCount === 1 ? 'imóvel encontrado' : 'imóveis encontrados' }}
+      </span>
+      <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center gap-2" (click)="onSearch()">
+        <span class="text-sm">🔍</span>  <!-- Adicionar outroicone -->
+        Buscar
+      </button>
+    </div>
+
+    <app-property-card></app-property-card>
+  </div>
+  

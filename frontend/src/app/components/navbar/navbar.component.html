@@ -1,0 +1,65 @@
+<header class="sticky top-0 z-50 w-full border-b"
+        style="background-color: var(--color-background); backdrop-filter: blur(8px);">
+  <div class="container flex h-16 items-center justify-between">
+
+    <!-- Logo -->
+    <a routerLink="/" class="flex items-center space-x-2">
+      <div class="h-8 w-8 rounded-lg flex items-center justify-center"
+           style="background-color: var(--color-primary);">
+        <app-icon-home class="h-4 w-4" style="color: var(--color-primary-foreground);"></app-icon-home>
+      </div>
+      <span class="font-bold text-xl" style="color: var(--color-primary);">ImovelTech</span>
+    </a>
+
+    <!-- Desktop navigation -->
+    <nav class="hidden md:flex items-center space-x-6">
+      <a *ngFor="let item of navigation"
+         [routerLink]="item.href"
+         class="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+         routerLinkActive="text-[var(--color-primary)] bg-[var(--color-muted)]"
+         [routerLinkActiveOptions]="{ exact: true }">
+        <ng-container [ngSwitch]="item.icon">
+          <app-icon-home *ngSwitchCase="'home'" class="h-4 w-4"></app-icon-home>
+          <app-icon-heart *ngSwitchCase="'heart'" class="h-4 w-4"></app-icon-heart>
+          <app-icon-bar-chart *ngSwitchCase="'bar-chart'" class="h-4 w-4"></app-icon-bar-chart>
+          <app-icon-plus *ngSwitchCase="'plus'" class="h-4 w-4"></app-icon-plus>
+        </ng-container>
+        <span>{{ item.name }}</span>
+      </a>
+    </nav>
+
+    <!-- Auth Section -->
+    <div class="flex items-center space-x-4">
+      <!-- Simulando usuário autenticado -->
+      <div class="relative group hidden md:flex">
+        <button class="h-8 w-8 rounded-full flex items-center justify-center"
+                style="background-color: var(--color-primary); color: var(--color-primary-foreground);">
+          A
+        </button>
+        <div class="absolute right-0 mt-2 w-48 border rounded-md shadow-lg hidden group-hover:block z-50"
+             style="background-color: var(--color-background); border-color: var(--color-border);">
+          <div class="px-4 py-2 text-sm text-[var(--color-muted-foreground)]">
+            <p class="font-medium">Ana Silva</p>
+          </div>
+          <hr>
+          <a routerLink="/profile" class="block px-4 py-2 hover:bg-[var(--color-muted)] text-sm">Perfil</a>
+          <a routerLink="/admin" class="block px-4 py-2 hover:bg-[var(--color-muted)] text-sm">Painel Admin</a>
+          <button class="w-full text-left px-4 py-2 hover:bg-[var(--color-muted)] text-sm">Sair</button>
+        </div>
+      </div>
+
+      <!-- Simulando usuário não autenticado -->
+      <div class="hidden md:flex items-center space-x-2">
+        <a routerLink="/login"
+           class="text-sm font-medium"
+           style="color: var(--color-muted-foreground);">Entrar</a>
+        <a routerLink="/register"
+           class="text-sm px-4 py-2 rounded"
+           style="background-color: var(--color-primary); color: var(--color-primary-foreground);">
+          Cadastrar
+        </a>
+      </div>
+    </div>
+
+  </div>
+</header>
