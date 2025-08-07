@@ -1,73 +1,129 @@
 <div class="bg-white rounded-lg shadow p-6 space-y-4">
-    <!-- Cabeçalho -->
-    <div class="flex items-center justify-between">
-      <div class="flex items-center space-x-2">
-        <span class="text-green-600 font-bold">🛠️</span>   <!-- Adicionar outroicone -->
-        <h3 class="font-semibold text-lg">Filtros</h3>
-      </div>
-      <button class="text-sm text-gray-600 hover:underline" (click)="clearFilters()">
-        Limpar
-      </button>
+  <!-- Cabeçalho -->
+  <div class="flex items-center justify-between">
+    <div class="flex items-center space-x-2">
+      <!--<span class="text-green-600 font-bold">🛠️</span>  Adicionar outroicone -->
+      <h3 class="font-semibold text-lg">Filtros</h3>
     </div>
-  
-    <!-- Filtros principais -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.city">
-        <option value="">Cidade</option>
-        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-      </select>
-  
-      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.neighborhood">
-        <option value="">Bairro</option>
-        <option *ngFor="let n of neighborhoods" [value]="n">{{ n }}</option>
-      </select>
-  
-      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.type">
-        <option value="">Tipo</option>
-        <option value="apartment">Apartamento</option>
-        <option value="house">Casa</option>
-        <option value="commercial">Comercial</option>
-      </select>
-    </div>
-  
-    <!-- Faixa de Preço -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input class="w-full border rounded px-3 py-2" type="number" placeholder="Preço mínimo" [(ngModel)]="filters.minPrice" />
-      <input class="w-full border rounded px-3 py-2" type="number" placeholder="Preço máximo" [(ngModel)]="filters.maxPrice" />
-    </div>
-  
-    <!-- Avançado -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.bedrooms">
+    <button class="text-sm text-gray-600 hover:underline" (click)="clearFilters()">
+      Limpar
+    </button>
+  </div>
+
+  <!-- Filtros principais -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <input type="text" class="w-full border rounded px-3 py-2" [(ngModel)]="filters.city"
+      placeholder="Digite a cidade" />
+
+    <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.neighborhood">
+      <option value="">Bairro</option>
+      <option *ngFor="let n of neighborhoods" [value]="n">{{ n }}</option>
+    </select>
+
+    <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.type">
+      <option value="">Tipo</option>
+      <option value="apartment">Apartamento</option>
+      <option value="house">Casa</option>
+      <option value="commercial">Comercial</option>
+    </select>
+
+    <div class="md:col-span-3 flex gap-4">
+      <select class="w-40 border rounded px-3 py-2" [(ngModel)]="filters.bedrooms">
         <option value="">Quartos</option>
-        <option value="1">1+ quarto</option>
-        <option value="2">2+ quartos</option>
-        <option value="3">3+ quartos</option>
-        <option value="4">4+ quartos</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
       </select>
-  
-      <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.bathrooms">
+
+      <select class="w-40 border rounded px-3 py-2" [(ngModel)]="filters.bathrooms">
         <option value="">Banheiros</option>
-        <option value="1">1+ banheiro</option>
-        <option value="2">2+ banheiros</option>
-        <option value="3">3+ banheiros</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
       </select>
-  
-      <input class="w-full border rounded px-3 py-2" type="number" placeholder="Área mín. (m²)" [(ngModel)]="filters.minArea" />
-      <input class="w-full border rounded px-3 py-2" type="number" placeholder="Área máx. (m²)" [(ngModel)]="filters.maxArea" />
     </div>
-  
-    <!-- Rodapé -->
-    <div class="flex items-center justify-between border-t pt-4">
-      <span class="text-sm text-gray-500">
-        {{ resultsCount }} {{ resultsCount === 1 ? 'imóvel encontrado' : 'imóveis encontrados' }}
-      </span>
-      <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center gap-2" (click)="onSearch()">
-        <span class="text-sm">🔍</span>  <!-- Adicionar outroicone -->
-        Buscar
-      </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <!-- <input class="w-full border rounded px-3 py-2" type="number" placeholder="Área mín. (m²)"
+      [(ngModel)]="filters.minArea" />
+    <input class="w-full border rounded px-3 py-2" type="number" placeholder="Área máx. (m²)"
+      [(ngModel)]="filters.maxArea" /> -->
+  </div>
+
+  <!-- Valor (com slider) -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Valor (R$)</label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+        <div>
+          <span class="text-sm text-gray-600">Mín: R$ {{ filters.minPrice | number:'1.0-0' }}</span>
+          <input type="range" min="0" max="2000000" step="10000" [(ngModel)]="filters.minPrice"
+            class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
+        </div>
+        <div>
+          <span class="text-sm text-gray-600">Máx: R$ {{ filters.maxPrice | number:'1.0-0' }}</span>
+          <input type="range" min="0" max="2000000" step="10000" [(ngModel)]="filters.maxPrice"
+            class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
+        </div>
+      </div>
     </div>
 
-    <app-property-card></app-property-card>
+    <!-- Área construída (com slider) -->
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Área construída (m²)</label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+        <div>
+          <span class="text-sm text-gray-600">Mín: {{ filters.minBuiltArea }} m²</span>
+          <input type="range" min="0" max="1000" step="10" [(ngModel)]="filters.minBuiltArea"
+            class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
+        </div>
+        <div>
+          <span class="text-sm text-gray-600">Máx: {{ filters.maxBuiltArea }} m²</span>
+          <input type="range" min="0" max="1000" step="10" [(ngModel)]="filters.maxBuiltArea"
+            class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Área total (com slider) -->
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Área total (m²)</label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+        <div>
+          <span class="text-sm text-gray-600">Mín: {{ filters.minTotalArea }} m²</span>
+          <input type="range" min="0" max="2000" step="10" [(ngModel)]="filters.minTotalArea"
+            class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
+        </div>
+        <div>
+          <span class="text-sm text-gray-600">Máx: {{ filters.maxTotalArea }} m²</span>
+          <input type="range" min="0" max="2000" step="10" [(ngModel)]="filters.maxTotalArea"
+            class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
+        </div>
+      </div>
+    </div>
   </div>
-  
+
+  <!-- Avançado -->
+
+
+  <!-- Rodapé -->
+  <div class="flex items-center justify-between border-t pt-4">
+    <span class="text-sm text-gray-500">
+      {{ resultsCount }} {{ resultsCount === 1 ? 'imóvel encontrado' : 'imóveis encontrados' }}
+    </span>
+    <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center gap-2"
+      (click)="onSearch()">
+      <!-- <span class="text-sm">🔍</span>   Adicionar outroicone -->
+      Buscar
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-6">
+    <app-property-card *ngFor="let property of properties" [property]="property"
+      (onClick)="onPropertyClick(property)" />
+  </div>
+
+
+</div>
