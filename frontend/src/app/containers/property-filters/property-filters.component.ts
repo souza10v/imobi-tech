@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PropertyCardComponent, Property } from '../../components/property-card/property-card.component';
+import { FiltersService } from '../../services/filters/filters.service';
 
 
 
@@ -11,9 +12,14 @@ import { PropertyCardComponent, Property } from '../../components/property-card/
   imports: [CommonModule, FormsModule, PropertyCardComponent],
   templateUrl: './property-filters.component.html',
 })
+
 export class PropertyFiltersComponent {
   cities = ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte'];
   neighborhoods = ['Centro', 'Zona Sul', 'Zona Norte'];
+
+  constructor(
+    private filtersService: FiltersService
+  ){}
 
   filters: any = {
     city: '',
