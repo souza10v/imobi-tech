@@ -2,10 +2,10 @@
   <!-- Cabeçalho -->
   <div class="flex items-center justify-between">
     <div class="flex items-center space-x-2">
-      <!--<span class="text-green-600 font-bold">🛠️</span>  Adicionar outroicone -->
       <h3 class="font-semibold text-lg">Filtros</h3>
     </div>
-    <button class="text-sm text-gray-600 hover:underline" (click)="clearFilters()">
+    <button type="button" class="cursor-pointer text-sm text-gray-600 hover:underline hover:text-gray-800 transition"
+      (click)="clearFilters()">
       Limpar
     </button>
   </div>
@@ -22,10 +22,14 @@
 
     <select class="w-full border rounded px-3 py-2" [(ngModel)]="filters.type">
       <option value="">Tipo</option>
-      <option value="apartment">Apartamento</option>
-      <option value="house">Casa</option>
-      <option value="commercial">Comercial</option>
-    </select>
+      <option value="HOUSE">Casa</option>
+      <option value="APARTMENT">Apartamento</option>
+      <option value="STUDIO">Kitnet / Studio</option>
+      <option value="FARM">Fazenda / Sítio / Chácara</option>
+      <option value="LAND">Terreno</option>
+      <option value="COMMERCIAL">Comercial</option>
+      <option value="OTHER">Outro</option>
+    </select>    
 
     <div class="md:col-span-3 flex gap-4">
       <select class="w-40 border rounded px-3 py-2" [(ngModel)]="filters.bedrooms">
@@ -33,23 +37,16 @@
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
-        <option value="4">4</option>
+        <option value="4">4+</option>
       </select>
 
       <select class="w-40 border rounded px-3 py-2" [(ngModel)]="filters.bathrooms">
         <option value="">Banheiros</option>
         <option value="1">1</option>
         <option value="2">2</option>
-        <option value="3">3</option>
+        <option value="3">3+</option>
       </select>
     </div>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-    <!-- <input class="w-full border rounded px-3 py-2" type="number" placeholder="Área mín. (m²)"
-      [(ngModel)]="filters.minArea" />
-    <input class="w-full border rounded px-3 py-2" type="number" placeholder="Área máx. (m²)"
-      [(ngModel)]="filters.maxArea" /> -->
   </div>
 
   <!-- Valor (com slider) -->
@@ -59,12 +56,16 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
         <div>
           <span class="text-sm text-gray-600">Mín: R$ {{ filters.minPrice | number:'1.0-0' }}</span>
-          <input type="range" min="0" max="2000000" step="10000" [(ngModel)]="filters.minPrice"
+          <input type="range" [min]="PRICE_MIN" [max]="filters.maxPrice ?? PRICE_MAX" [step]="PRICE_STEP"
+            [(ngModel)]="filters.minPrice"
+            (ngModelChange)="onMinChange('minPrice','maxPrice',$event, PRICE_MIN, PRICE_MAX)"
             class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
         </div>
         <div>
           <span class="text-sm text-gray-600">Máx: R$ {{ filters.maxPrice | number:'1.0-0' }}</span>
-          <input type="range" min="0" max="2000000" step="10000" [(ngModel)]="filters.maxPrice"
+          <input type="range" [min]="filters.minPrice ?? PRICE_MIN" [max]="PRICE_MAX" [step]="PRICE_STEP"
+            [(ngModel)]="filters.maxPrice"
+            (ngModelChange)="onMaxChange('minPrice','maxPrice',$event, PRICE_MIN, PRICE_MAX)"
             class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
         </div>
       </div>
@@ -76,12 +77,16 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
         <div>
           <span class="text-sm text-gray-600">Mín: {{ filters.minBuiltArea }} m²</span>
-          <input type="range" min="0" max="1000" step="10" [(ngModel)]="filters.minBuiltArea"
+          <input type="range" [min]="BUILT_MIN" [max]="filters.maxBuiltArea ?? BUILT_MAX" [step]="BUILT_STEP"
+            [(ngModel)]="filters.minBuiltArea"
+            (ngModelChange)="onMinChange('minBuiltArea','maxBuiltArea',$event, BUILT_MIN, BUILT_MAX)"
             class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
         </div>
         <div>
           <span class="text-sm text-gray-600">Máx: {{ filters.maxBuiltArea }} m²</span>
-          <input type="range" min="0" max="1000" step="10" [(ngModel)]="filters.maxBuiltArea"
+          <input type="range" [min]="filters.minBuiltArea ?? BUILT_MIN" [max]="BUILT_MAX" [step]="BUILT_STEP"
+            [(ngModel)]="filters.maxBuiltArea"
+            (ngModelChange)="onMaxChange('minBuiltArea','maxBuiltArea',$event, BUILT_MIN, BUILT_MAX)"
             class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
         </div>
       </div>
@@ -93,29 +98,31 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
         <div>
           <span class="text-sm text-gray-600">Mín: {{ filters.minTotalArea }} m²</span>
-          <input type="range" min="0" max="2000" step="10" [(ngModel)]="filters.minTotalArea"
+          <input type="range" [min]="TOTAL_MIN" [max]="filters.maxTotalArea ?? TOTAL_MAX" [step]="TOTAL_STEP"
+            [(ngModel)]="filters.minTotalArea"
+            (ngModelChange)="onMinChange('minTotalArea','maxTotalArea',$event, TOTAL_MIN, TOTAL_MAX)"
             class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
         </div>
         <div>
           <span class="text-sm text-gray-600">Máx: {{ filters.maxTotalArea }} m²</span>
-          <input type="range" min="0" max="2000" step="10" [(ngModel)]="filters.maxTotalArea"
+          <input type="range" [min]="filters.minTotalArea ?? TOTAL_MIN" [max]="TOTAL_MAX" [step]="TOTAL_STEP"
+            [(ngModel)]="filters.maxTotalArea"
+            (ngModelChange)="onMaxChange('minTotalArea','maxTotalArea',$event, TOTAL_MIN, TOTAL_MAX)"
             class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-green-600" />
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Avançado -->
-
-
   <!-- Rodapé -->
   <div class="flex items-center justify-between border-t pt-4">
     <span class="text-sm text-gray-500">
       {{ resultsCount }} {{ resultsCount === 1 ? 'imóvel encontrado' : 'imóveis encontrados' }}
     </span>
-    <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center gap-2"
+
+    <button type="button"
+      class="cursor-pointer bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg inline-flex items-center gap-2 transition-transform duration-150 ease-out hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-green-500"
       (click)="onSearch()">
-      <!-- <span class="text-sm">🔍</span>   Adicionar outroicone -->
       Buscar
     </button>
   </div>
@@ -124,6 +131,4 @@
     <app-property-card *ngFor="let property of properties" [property]="property"
       (onClick)="onPropertyClick(property)" />
   </div>
-
-
 </div>

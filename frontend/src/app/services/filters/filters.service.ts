@@ -17,30 +17,25 @@ export class FiltersService {
 
   ) { }
 
-  getFilteredProperties(
-    city: string,
-    type: string,
-    minPrice: number,
-    maxPrice: number,
-    bedrooms: number,
-    minArea: number,
-    maxArea: number
-  ): Observable<any> {
+  getFilteredProperties(filters: any): Observable<any> {
     const url = `${this.apiUrl}/property-data/filter-data`;
-
+  
     const params = {
-      city: city,
-      type: type,
-      minPrice: minPrice.toString(),
-      maxPrice: maxPrice.toString(),
-      bedrooms: bedrooms.toString(),
-      minArea: minArea.toString(),
-      maxArea: maxArea.toString()
+      city: filters.city,
+      neighborhood: filters.neighborhood,
+      type: filters.type,
+      minPrice: filters.minPrice?.toString(),
+      maxPrice: filters.maxPrice?.toString(),
+      bedrooms: filters.bedrooms?.toString(),
+      bathrooms: filters.bathrooms?.toString(),
+      minBuiltArea: filters.minBuiltArea?.toString(),
+      maxBuiltArea: filters.maxBuiltArea?.toString(),
+      minTotalArea: filters.minTotalArea?.toString(),
+      maxTotalArea: filters.maxTotalArea?.toString()
     };
-
+  
     return this.http.get(url, { params });
   }
-
-
+  
 
 }
