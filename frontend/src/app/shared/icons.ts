@@ -240,7 +240,7 @@ export class IconArrowLeftComponent { }
         d="M12 3L3.75 7.5v4.875c0 5.04 3.307 9.564 8.25 10.875 4.943-1.311 8.25-5.835 8.25-10.875V7.5L12 3z" />
 </svg>`
 })
-export class IconShieldComponent {}
+export class IconShieldComponent { }
 
 @Component({
   standalone: true,
@@ -253,7 +253,7 @@ export class IconShieldComponent {}
         d="M9 12l2 2l4 -4M12 21a9 9 0 1 1 0-18a9 9 0 0 1 0 18z" />
 </svg>`
 })
-export class IconCheckCircleComponent {}
+export class IconCheckCircleComponent { }
 
 @Component({
   standalone: true,
@@ -266,7 +266,7 @@ export class IconCheckCircleComponent {}
         d="M12 17.27l5.18 3.73-1.64-5.64L20.54 9.5l-5.72-.5L12 3 9.18 9 3.46 9.5l4.9 5.86-1.64 5.64z" />
 </svg>`
 })
-export class IconStarComponent {}
+export class IconStarComponent { }
 
 @Component({
   standalone: true,
@@ -279,7 +279,7 @@ export class IconStarComponent {}
         d="M5.25 5.25v13.5L18.75 12 5.25 5.25z" />
 </svg>`
 })
-export class IconPlayComponent {}
+export class IconPlayComponent { }
 
 @Component({
   standalone: true,
@@ -292,7 +292,7 @@ export class IconPlayComponent {}
         d="M3 3v18h18M9 17V9M13 17V5M17 17v-6" />
 </svg>`
 })
-export class IconBarChartComponent {}
+export class IconBarChartComponent { }
 
 @Component({
   standalone: true,
@@ -305,7 +305,7 @@ export class IconBarChartComponent {}
         d="M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zM12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9c-2.5-2.5-4-6-4-9s1.5-6.5 4-9z" />
 </svg>`
 })
-export class IconGlobeComponent {}
+export class IconGlobeComponent { }
 
 @Component({
   standalone: true,
@@ -318,7 +318,7 @@ export class IconGlobeComponent {}
         d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
 </svg>`
 })
-export class IconSmartphoneComponent {}
+export class IconSmartphoneComponent { }
 
 @Component({
   standalone: true,
@@ -331,7 +331,7 @@ export class IconSmartphoneComponent {}
         d="M13 10V3L4 14h7v7l9-11h-7z" />
 </svg>`
 })
-export class IconZapComponent {}
+export class IconZapComponent { }
 
 @Component({
   standalone: true,
@@ -354,3 +354,29 @@ export class IconHeartComponent { }
   `
 })
 export class IconPlusComponent { }
+
+@Component({
+  standalone: true,
+  selector: 'app-icon-bathroom',
+  template: `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shower-head-icon lucide-shower-head"><path d="m4 4 2.5 2.5"/><path d="M13.5 6.5a4.95 4.95 0 0 0-7 7"/><path d="M15 5 5 15"/><path d="M14 17v.01"/><path d="M10 16v.01"/><path d="M13 13v.01"/><path d="M16 10v.01"/><path d="M11 20v.01"/><path d="M17 14v.01"/><path d="M20 11v.01"/></svg>
+  `
+})
+export class IconBathroomComponent { }
+
+@Component({
+  standalone: true,
+  selector: 'app-icon-bedroom',
+  template: `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bed-double-icon lucide-bed-double"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/></svg> `
+})
+export class IconBedroomComponent { }
+
+@Component({
+  standalone: true,
+  selector: 'app-square-intersect',
+  template: `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-squares-intersect-icon lucide-squares-intersect"><path d="M10 22a2 2 0 0 1-2-2"/><path d="M14 2a2 2 0 0 1 2 2"/><path d="M16 22h-2"/><path d="M2 10V8"/><path d="M2 4a2 2 0 0 1 2-2"/><path d="M20 8a2 2 0 0 1 2 2"/><path d="M22 14v2"/><path d="M22 20a2 2 0 0 1-2 2"/><path d="M4 16a2 2 0 0 1-2-2"/><path d="M8 10a2 2 0 0 1 2-2h5a1 1 0 0 1 1 1v5a2 2 0 0 1-2 2H9a1 1 0 0 1-1-1z"/><path d="M8 2h2"/></svg>
+ `
+})
+export class IconSquareIntersectComponent { }

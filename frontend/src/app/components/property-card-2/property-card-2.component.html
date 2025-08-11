@@ -1,0 +1,54 @@
+<div *ngIf="property as p"
+  class="bg-white rounded-lg shadow border p-6 space-y-4 transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-md cursor-pointer w-full max-w-sm h-[400px] focus:outline-none focus:ring-2 focus:ring-green-500"
+  role="button" tabindex="0" [attr.aria-label]="'Ver detalhes do imóvel ' + (p.shortDescription || '')"
+  (click)="onClick.emit(p)" (keydown.enter)="onClick.emit(p)"
+  (keydown.space)="onClick.emit(p); $event.preventDefault()">
+  <!-- Imagem -->
+  <div class="relative h-52 w-full rounded overflow-hidden">
+    <img [src]="currentImage(p)" [alt]="p.shortDescription || 'Imagem do imóvel'" class="w-full h-full object-cover"
+      loading="lazy" decoding="async" referrerpolicy="no-referrer" (error)="handleImgError(p)" />
+
+    <!-- Dots -->
+    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1" *ngIf="(p.images?.length || 0) > 1">
+      <button type="button" *ngFor="let _ of p.images; let i = index"
+        class="w-1.5 h-1.5 rounded-full focus:outline-none" [ngClass]="i === activeIndex ? 'bg-white' : 'bg-white/50'"
+        (click)="$event.stopPropagation(); setActiveIndex(i)">
+      </button>
+    </div>
+  </div>
+
+  <!-- Conteúdo -->
+  <div class="space-y-1 min-h-32 max-h-32">
+    <p class="text-sm text-gray-700 line-clamp-2">
+      {{ propertyTypeToPt(p.type) || 'Descrição não disponível' }}
+    </p>    
+
+    <div class="text-lg font-semibold text-gray-900">
+      {{ p.price | currency:'BRL':'symbol':'1.0-0' }}
+      <span
+        *ngIf="(p.pricePerSquareMeter ?? (p.areaBuilt ? p.price / p.areaBuilt : 0)) > 0"
+        class="text-xs text-gray-500 font-normal">
+        ({{ (p.pricePerSquareMeter ?? (p.price / p.areaBuilt)) | currency:'BRL':'symbol':'1.0-0' }}/m²)
+      </span>
+    </div>
+    
+
+    <div class="text-sm text-gray-700 font-medium">
+      {{ (p.areaBuilt ?? '—') }} m² ·
+      {{ p.bedrooms ?? 0 }} quarto{{ (p.bedrooms ?? 0) > 1 ? 's' : '' }} ·
+      {{ p.garage ?? 0 }} vaga{{ (p.garage ?? 0) > 1 ? 's' : '' }} de garagem
+    </div>
+
+    <div class="text-sm text-gray-500 line-clamp-1">
+      {{ p.neighborhood || 'Endereço não disponível' }}
+    </div>
+  </div>
+
+  <!-- Ação favorita -->
+  <div class="flex justify-end">
+    <button class="text-gray-400 hover:text-red-500 transition" title="Favoritar" type="button"
+      (click)="toggleFavorite(p, $event)">
+      <i class="fa" [ngClass]="isFav ? 'fa-heart' : 'fa-heart-o'"></i>
+    </button>
+  </div>
+</div>
